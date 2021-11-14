@@ -1,0 +1,19 @@
+.reportModalLargeModal.small-3iVZYw {
+  $grid_gap: 10;
+  width: 670px;
+  min-width: 670px;
+  max-width: 670px;
+  max-height: 720px;
+  min-height: 200px;
+  [role="radiogroup"] {
+    display: grid;
+    grid-template-columns: calc(50% - #{$grid_gap / 2}px) calc(50% - #{$grid_gap / 2}px);
+    grid-gap: #{$grid_gap}px;
+    &>div {
+      margin-bottom: 0;
+      &:last-child {
+        width: calc(200% + #{$grid_gap}px);
+      }
+    }
+  }
+}
