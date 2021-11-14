@@ -8,11 +8,31 @@ const { report } = getModule("report", "submitReport")
 const ConfirmModal = getModuleByDisplayName("ConfirmModal")
 const { getChannel } = getModule("getDMFromUserId")
 const reasons = [
-  { name: "Illegal Content", desc: "Child Pornography, solicitation of minors, terrorism, threats of school shootings or criminal activity.", value: 0 },
-  { name: "Harassment", desc: "Threats, stalking, bullying, sharing of personal information, impersonation or raiding.", value: 1 },
-  { name: "Spam or Phishing links", desc: "Fake links, invites to servers via bot, malicious links or attachments.", value: 2 },
-  { name: "Self Harm", desc: "Person is at risk at claiming intent of self-harm.", value: 3 },
-  { name: "NSFW Content", desc: "Pornography or other adult content in a non-NSFW channel or unwanted DM.", value: 4 }
+  { 
+    name: "Illegal Content", 
+    desc: "Child Pornography, solicitation of minors, terrorism, threats of school shootings or criminal activity.", 
+    value: 0 
+  },
+  { 
+    name: "Harassment", 
+    desc: "Threats, stalking, bullying, sharing of personal information, impersonation or raiding.", 
+    value: 1 
+  },
+  { 
+    name: "Spam or Phishing links", 
+    desc: "Fake links, invites to servers via bot, malicious links or attachments.", 
+    value: 2 
+  },
+  { 
+    name: "Self Harm", 
+    desc: "Person is at risk at claiming intent of self-harm.", 
+    value: 3 
+  },
+  { 
+    name: "NSFW Content", 
+    desc: "Pornography or other adult content in a non-NSFW channel or unwanted DM.", 
+    value: 4 
+  }
 ]
 
 export default memo(({ modalProps, message }) => {

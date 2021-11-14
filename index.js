@@ -41,13 +41,15 @@ export default class reportMessages extends Plugin {
         )
       }
     })
-    patch("reportMessages-MiniPopover-Patch", MiniPopover, "default", ([{children}]) => {
-      const ele = children[children.length - 1]
+    patch("reportMessages-MiniPopover-Patch", MiniPopover, "default", (res) => {
+      if (!Boolean(res[0].children[res[0].children.length - 1]?.props?.message)) return 
+      const ele = res[0].children[res[0].children.length - 1]
       const { message } = ele.props
       const origType = ele.type
       ele.type = () => {
         const showWhenDis = !(!(this.settings.get("disabledPop", true)) && isDisabled(this)) && this.settings.get("addToPop", true)
         const popUp = origType(ele.props)
+        if (!popUp?.props?.children) return popUp
         const lastPop = popUp.props.children[popUp.props.children.length - 1]
         if (lastPop !== null) {
           const oldPop = lastPop.props.renderPopout
@@ -83,9 +85,7 @@ export default class reportMessages extends Plugin {
                 className="report"
                 disabled={isDisabled(this)}
                 onClick={() => openModal(mProps => <ReportPage modalProps={mProps} message={message} />)}
-              >
-                <Icon name="Flag" size={18} />  
-              </MiniPopover.Button>}
+              > <Icon name="Flag" size={18} /> </MiniPopover.Button>}
             </ToolTip>
           )
         }
