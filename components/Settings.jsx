@@ -3,10 +3,15 @@ import { TextArea, SwitchItem, Category } from "@vizality/components/settings"
 
 export default memo(({ getSetting, updateSetting, toggleSetting }) => {
   const [blackList, setBlackList] = useState(getSetting("whiteListAllFriends", true))
+
   const [disabled, setDisabled] = useState(getSetting("showDisabled", true))
   const [addToPopouts, setAddToPopouts] = useState(getSetting("addToPopouts", true))
+
   const [disabledPop, setDisabledPop] = useState(getSetting("disabledPop", true))
   const [addToPop, setAddToPop] = useState(getSetting("addToPop", true))
+
+  const [disabledAct, setDisabledAct] = useState(getSetting("disabledAct", true))
+  const [addToAct, setAddToAct] = useState(getSetting("addToAct", true))
   return (
     <>
       <TextArea
@@ -53,6 +58,22 @@ export default memo(({ getSetting, updateSetting, toggleSetting }) => {
             setDisabledPop(!disabledPop)
           }}
         >Show The Disabled Mini Popover Button</SwitchItem>
+      </Category>
+      <Category title="Message Actions">
+        <SwitchItem
+          value={addToAct}
+          onChange={() => {
+            toggleSetting("addToAct", true)
+            setAddToAct(!addToAct)
+          }}
+        >Add to Message Actions</SwitchItem>
+        <SwitchItem
+          value={disabledAct}
+          onChange={() => {
+            toggleSetting("disabledAct", true)
+            setDisabledAct(!disabledAct)
+          }}
+        >Show The Disabled Message Action Item</SwitchItem>
       </Category>
     </>
   )

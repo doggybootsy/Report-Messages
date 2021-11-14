@@ -47,7 +47,8 @@ export default class reportMessages extends Plugin {
       const { message } = ele.props
       const origType = ele.type
       ele.type = () => {
-        const showWhenDis = !(!(this.settings.get("disabledPop", true)) && isDisabled(this)) && this.settings.get("addToPop", true)
+        const showWhenDisPop = !(!(this.settings.get("disabledPop", true)) && isDisabled(this)) && this.settings.get("addToPop", true)
+        const showWhenDisAct = !(!(this.settings.get("disabledAct", true)) && isDisabled(this)) && this.settings.get("addToAct", true)
         const popUp = origType(ele.props)
         if (!popUp?.props?.children) return popUp
         const lastPop = popUp.props.children[popUp.props.children.length - 1]
@@ -56,7 +57,7 @@ export default class reportMessages extends Plugin {
           lastPop.props.renderPopout = (props) => {
             const test = oldPop(props)
             // Enable the report button
-            if (showWhenDis) test.props.canReport = true
+            if (showWhenDisAct) test.props.canReport = true
             const oldTp = test.type
             test.type = (pro) => {
               const old = oldTp(pro)
@@ -64,7 +65,7 @@ export default class reportMessages extends Plugin {
               old.type = (p) => {
                 const t = oldPType(p)
                 // Change the action of the button
-                if (showWhenDis) {
+                if (showWhenDisAct) {
                   const reportItem = t.props.children.props.children.props.children.filter(m => m.key ==="report")[0]
                   reportItem.props.action = () => openModal(mProps => <ReportPage modalProps={mProps} message={message} />)
                   reportItem.props.disabled = isDisabled(this)
@@ -76,16 +77,19 @@ export default class reportMessages extends Plugin {
             return test
           }
         }
-        if (showWhenDis) {
+        if (showWhenDisPop) {
           // Add button
-          popUp.props.children.unshift(
+          popUp.props.children.splice((popUp.props.children.length - 2),0,
             <ToolTip text={Messages.REPORT_MESSAGE_MENU_OPTION}>
               {TtProps => <MiniPopover.Button 
                 {...TtProps} 
                 className="report"
                 disabled={isDisabled(this)}
-                onClick={() => openModal(mProps => <ReportPage modalProps={mProps} message={message} />)}
-              > <Icon name="Flag" size={18} /> </MiniPopover.Button>}
+                onClick={(e) => {
+                  TtProps.onClick(e)
+                  openModal(mProps => <ReportPage modalProps={mProps} message={message} />)
+                }}
+              > <Icon name="Flag" size={17} /> </MiniPopover.Button>}
             </ToolTip>
           )
         }
