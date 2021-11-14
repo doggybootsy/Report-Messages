@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "description": "Report messages within the discord client",
   "author": "Doggybootsy",
-  "license": ""
+  "license": "MIT"
 }
